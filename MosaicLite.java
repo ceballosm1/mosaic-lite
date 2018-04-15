@@ -64,7 +64,8 @@ private static int GetNumberBetween(int min, int max) {
     }
 }
 
-class MosaicLiteFrame extends JFrame {
+class MosaicLiteFrame extends JFrame implements ActionListener {
+    private ArrayList<XAndOTile> tileList;
    
     public MosaicLiteFrame() {
         setBounds(200,200,1200,800);
@@ -78,15 +79,25 @@ class MosaicLiteFrame extends JFrame {
 
         JButton randomize = new JButton("Randomize");
         buttonPanel.add(randomize);
+        randomize.addActionListener(this);
 
         JPanel xAndOGridPanel = new JPanel();
         contentPane.add(xAndOGridPanel, BorderLayout.CENTER);
         xAndOGridPanel.setLayout(new GridLayout(3,3));
-
-       for(int i=1; i<10; i++) {
+        
+        tileList = new ArrayList<XAndOTile>();
+        for(int i=1; i<10; i++) {
             XAndOTile tile = new XAndOTile();
             xAndOGridPanel.add(tile);
+            tileList.add(tile);
         }
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        for (XAndOTile tile:tileList) {
+            tile.SetRandomValue();
+        }
+        repaint();
     }
 }
 public class MosaicLite {
